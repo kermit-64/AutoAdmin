@@ -123,13 +123,17 @@ PDFdir = get_download_path()
 
 # Which is the most recent PDF?
 most_recent_pdf_path = find_most_recent_pdf(PDFdir)
-SelectedFilename = os.path.basename(most_recent_pdf_path)
+answer = "No"
 
-# Aks if this is the correct one
-boxtext = "Wil je de slachtresultaten van de file '" + SelectedFilename + "' in de downloads folder importeren?"
-title = "Import slachtresultaten"
-answer = show_dialog_box(title, boxtext)
+# Check if a PDF file is found - else this will give error
+if most_recent_pdf_path:
+    SelectedFilename = os.path.basename(most_recent_pdf_path)
 
+    # Ask if this is the correct one
+    boxtext = "Wil je de slachtresultaten van de file '" + SelectedFilename + "' in de downloads folder importeren?"
+    title = "Import slachtresultaten"
+    answer = show_dialog_box(title, boxtext)
+    
 
 # If not correct file: let user select file. Else, set as correct file
 if answer == "No":
@@ -145,8 +149,9 @@ elif answer == "Yes":
 # Double check file type: should be PDF! 
 file_name, file_extension = os.path.splitext(ImportFile)
 if file_extension != ".pdf":
-    messagebox.showerror('Error: geen PDF', 'Error: dit is geen PDF file. Selecteer de juiste file!')
-
+    messagebox.showerror('Error: geen PDF/geen file', 'Error: dit is geen PDF file of je hebt geen file geselecteerd. Selecteer de juiste file!')
+    # Code must exit if no PDF!
+    exit()
 
 # 2. Parse PDF
 
