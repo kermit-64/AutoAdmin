@@ -116,6 +116,12 @@ def show_dialog_box(title, boxtext):
 
     return answer
 
+# 0. Check if script is in same folder as "Gewicht2.xlsx". Else: error and exit.
+if not os.path.exists(gewichtexcel):
+    messagebox.showerror('Error: Gewicht2.xlsx missing', 'Error: zorg ervoor dat dit bestand in dezelfde folder staat als Gewicht2.xlsx en probeer opnieuw!')
+    # Code must exit if no PDF!
+    exit()
+
 
 # 1. Which input file to process?
 # Set downloads folder
@@ -246,14 +252,14 @@ df_cpy['netto'] = df_cpy['netto'].astype(float)
 # add mean in the bottom
 df_cpy.Gemiddelde.iloc[-1] = round(df_cpy.netto.mean(),1)
 
-# Save Back up of the workbook first.
-BackupFolder = "BackUp"
+# Save Back up of the workbook first in user home directory.
+BackupFolder = os.path.expanduser('~\Slachtlijsten_Backup')
 
 if not os.path.exists(BackupFolder):
     os.mkdir(BackupFolder) 
 
-currentTS = datetime.datetime.now().strftime("%Y%b%d-%H%M%S")
-BUFilenamePath = "./Backup/" + "Gewicht2_" + currentTS + ".xlsx"
+currentTS = datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
+BUFilenamePath = BackupFolder + "\Gewicht2_" + currentTS + ".xlsx"
 
 shutil.copyfile(gewichtexcel, BUFilenamePath)
 
@@ -305,11 +311,12 @@ wb.save(gewichtexcel)
 
 # Move copy of PDF to PDF folder
 os.path.basename(ImportFile)
-PDFfolder = "Slachtlijsten_PDF"
+PDFfolder = os.path.expanduser('~\Slachtlijsten_Backup\Slachtlijsten_PDF')
 
 if not os.path.exists(PDFfolder):
     os.mkdir(PDFfolder) 
 
-file_name_PDFBU = "./Slachtlijsten_PDF/" + os.path.basename(ImportFile)
+
+file_name_PDFBU = PDFfolder + "/" + os.path.basename(ImportFile)
 
 shutil.move(ImportFile, file_name_PDFBU)
