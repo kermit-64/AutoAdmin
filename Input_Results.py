@@ -25,6 +25,7 @@ else:
 import tkinter as tk
 from tkinter import messagebox
 from tkinter import filedialog
+import locale
 
 # Dictionary with code value mappings:
 Vetbedekking = {'1-':0.33, 
@@ -237,7 +238,9 @@ df_cpy.insert(10, 'Levend gewicht', '')
 df_cpy.insert(11, 'Gemiddelde', '') 
 
 # Convert weight column to US format depending on decimal separator system settings windows
-df_cpy['netto'] = [x.replace(',', '.') for x in df_cpy['netto']]
+if locale.localeconv()["decimal_point"] == ".":
+    df_cpy['netto'] = [x.replace(',', '.') for x in df_cpy['netto']]
+
 df_cpy['netto'] = df_cpy['netto'].astype(float)
 
 # add mean in the bottom
