@@ -40,7 +40,7 @@ The application will consist of three main elements:
     - Check Downloads folder for the most recent PDF file.
     - If found, confirm with user if it's the correct file.
     - If not found or user chooses otherwise, prompt user to select the correct file.
-    - Display error message if no file is selected.
+    - Display error message if no file is selected or incorrect file type is selected.
 2. **PDF Parsing:**
     - Extract date (always present and formatted consistently).
     - Extract data table as a DataFrame, located between "correctie" and "totalen".
@@ -54,16 +54,16 @@ The application will consist of three main elements:
     - Save Excel file
     - Move PDF file to processed folder ("Slachtlijsten_PDF")
 
-### Run Phase 1 script:
+### Run Phase 1 python script:
 - Make sure script is in same folder as "Gewicht2.xlsx". 
 - Activate mamba environment "farm" (see farm_23Feb2024.yml): `$ conda activate farm`
-- Run script in VSC
+- Run py script in VSC
+
+### Run Phase 1 executable:
+- Make sure exe file is in same folder as "Gewicht2.xlsx". 
+- Double-click to run.
 
 ### To do:
-- Update folder paths to include absolute/defined paths
-- Fix compatibility issues with excel file decimal point in EU vs. US
-- Test what happens if no PDF file present in script
-- Create executable from python file to run on client PC
 - Nice-to-have in future release: check if format PDF file hasn't changed
 
 ## Future Phases:
